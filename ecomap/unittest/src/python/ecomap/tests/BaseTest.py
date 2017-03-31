@@ -3,7 +3,7 @@ from selenium import webdriver
 
 class BaseTest(object):
     def __init__(self):
-        self.driver = webdriver.Chrome('')      ##########
+        self._driver = webdriver.Chrome('')      # #########
 
     # @classmethod
     # def setUpClass(cls):
@@ -16,4 +16,4 @@ class BaseTest(object):
 
     @property
     def driver(self):
-        return self.driver
+        return self._driver

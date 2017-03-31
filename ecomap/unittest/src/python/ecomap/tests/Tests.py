@@ -23,7 +23,7 @@ class LoginTests(unittest.TestCase,
         self.sign_in_steps.type_email(USER_EMAIL)
         self.sign_in_steps.type_password(USER_EMAIL)
         self.sign_in_steps.click_submit_btn()
-        self.assertEqual("actual", "expected")   #####
+        self.assertEqual("actual", "expected")   # ####
 
     def test_sign_in_empty_login(self):
         pass

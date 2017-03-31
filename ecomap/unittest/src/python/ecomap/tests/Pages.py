@@ -4,11 +4,11 @@ from BasePage import BasePage
 
 URL = "localhost"
 
-#HomePage
+# HomePage
 SIGN_IN = (By.XPATH, "//a[@href='/#/login']")
 REGISTRATION = (By.XPATH, "//a[@href='/#/register']")
 
-#SignInPage
+# SignInPage
 EMAIL = (By.XPATH, "//input[@id='email']")
 PASS = (By.XPATH, "//input[@id='password']")
 SUBMIT_BTN = (By.XPATH, "//button[@type='submit']")
