@@ -1,4 +1,4 @@
-from ecoMapTests.Pages import *
+
 
 class BasePage(object):
 
@@ -24,6 +24,13 @@ class BasePage(object):
     def open_resources(self):
         #return resources page
         pass
+
+    def is_map_present(self):
+        map = self.driver.find_element_by_xpath('//div[@class="map-div flex-container flex-row flex-item-2 ng-scope"]')
+        res = False
+        if map is not None:
+            res = True
+        return res
 
     #def increase(self):
         #increase map
