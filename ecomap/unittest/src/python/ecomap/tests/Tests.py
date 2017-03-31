@@ -9,8 +9,7 @@ USER_EMAIL = "some test data"
 USER_PW = "some test data"
 
 
-class LoginTests(unittest.TestCase,
-                 BaseTest, BaseStep):
+class LoginTests(BaseTest):
 
     def __init__(self):
         BaseTest.__init__(self)

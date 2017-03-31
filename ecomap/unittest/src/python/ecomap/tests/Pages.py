@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 from BasePage import BasePage
 
-URL = "localhost"
+URL = "http://localhost"
 
 # HomePage
 SIGN_IN = (By.XPATH, "//a[@href='/#/login']")
@@ -23,7 +23,7 @@ class HomePage(BasePage):
 
     @property
     def url(self):
-        return self.url
+        return URL
 
     @property
     def sign_in(self):
