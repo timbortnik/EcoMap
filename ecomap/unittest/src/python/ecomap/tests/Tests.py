@@ -1,6 +1,5 @@
 import unittest
 
-from BaseStep import BaseStep
 from BaseTest import BaseTest
 from Steps import HomeSteps, SignInSteps
 
