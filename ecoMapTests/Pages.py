@@ -13,26 +13,18 @@ class MainPage(BasePage):
 
 
 class LoginPage(BasePage):
-
-    def enter_email(self, email):
+    def login(self, email, password):
         self.driver.find_element(*LoginPageLocators.EMAIL).send_keys(email)
-
-    def enter_password(self, password):
         self.driver.find_element(*LoginPageLocators.PASSWORD).send_keys(password)
-
-    def click_login_button(self):
         self.driver.find_element(*LoginPageLocators.LOGIN).click()
 
     def get_user(self):
         return self.driver.find_element(*LoginPageLocators.USER).text
 
-    def login(self, email, password):
-        self.enter_email(email)
-        self.enter_password(password)
-        self.click_login_button()
 
 class StatisticsPage(BasePage):
     pass
+
 
 class ResourcesPage(BasePage):
     pass
@@ -47,6 +39,7 @@ class LoginPageLocators(object):
     PASSWORD = (By.ID, 'password')
     LOGIN = (By.XPATH, '//*[@type="submit"]')
     USER = (By.XPATH, '//*[@href="/#/user_profile/info"]')
+
 
 
 

@@ -3,17 +3,17 @@ from selenium import webdriver
 import HtmlTestRunner
 import os
 
+
 class BaseTest(unittest.TestCase):
 
     @classmethod
-    def setUp(cls):
+    def setUpClass(cls):
         cls.path = os.path.dirname(os.path.abspath(__file__))
-        cls.driver = webdriver.Chrome(cls.path + "/chromedriver")\
+        cls.driver = webdriver.Chrome(cls.path + "/chromedriver")
 
     @classmethod
-    def tearDown(cls):
+    def tearDownClass(cls):
         cls.driver.quit()
-
 
 if __name__ == '__main__':
     unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=os.path.dirname(os.path.abspath(__file__))))
