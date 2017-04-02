@@ -3,16 +3,9 @@ from selenium import webdriver
 
 class BaseTest(object):
     def __init__(self):
-        self.driver = webdriver.Chrome('')      ##########
-
-    # @classmethod
-    # def setUpClass(cls):
-    #     cls.driver = webdriver.Chrome(executable_path')
-    #
-    # @classmethod
-    # def tearDownClass(cls):
-    #     if cls.driver != None:
-    #         cls.driver.quit()
+        self.driver = webdriver.Chrome()
+        self.driver.maximize_window()
+        self.driver.implicitly_wait(2)
 
     @property
     def driver(self):

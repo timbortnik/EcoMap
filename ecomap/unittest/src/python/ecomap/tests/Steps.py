@@ -1,5 +1,5 @@
-from BaseStep import BaseStep
 from Pages import HomePage, SignInPage
+from BaseStep import BaseStep
 
 
 class HomeSteps(BaseStep):
@@ -9,13 +9,16 @@ class HomeSteps(BaseStep):
         self.home_page = HomePage(self.driver)
 
     def open(self):
-        self.home_page.driver.get(self.home_page.url)
+        self.driver.get(self.home_page.url)
 
     def click_sign_in(self):
         self.home_page.sign_in.click()
 
     def click_registration(self):
         self.home_page.registration.click()
+
+    def get_user_name(self):
+        return self.home_page.user.text
 
 
 class SignInSteps(BaseStep):

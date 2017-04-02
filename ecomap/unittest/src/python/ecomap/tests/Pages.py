@@ -2,11 +2,13 @@ from selenium.webdriver.common.by import By
 
 from BasePage import BasePage
 
-URL = "localhost"
+URL = "http://localhost/"
 
 #HomePage
-SIGN_IN = (By.XPATH, "//a[@href='/#/login']")
+SIGN_IN_XPATH = (By.XPATH, "//a[@href='/#/login']")
+SIGN_IN = (By.XPATH, '//a[@href="/#/login"]')
 REGISTRATION = (By.XPATH, "//a[@href='/#/register']")
+USER = (By.XPATH, "//li/a[@href='/#/user_profile/info']")
 
 #SignInPage
 EMAIL = (By.XPATH, "//input[@id='email']")
@@ -15,43 +17,41 @@ SUBMIT_BTN = (By.XPATH, "//button[@type='submit']")
 
 
 class HomePage(BasePage):
-    def __init__(self, driver):
-        BasePage.__init__(self, driver)
-
-    def find_element(self, *locator):
-        self.driver.find_element(*locator)
+    # def __init__(self, driver):
+    #     BasePage.__init__(self, driver)
 
     @property
     def url(self):
-        return self.url
+        return URL
 
     @property
     def sign_in(self):
-        return self.find_element(SIGN_IN)
+        return self.base_find_element(*SIGN_IN)
 
     @property
     def registration(self):
-        return self.find_element(REGISTRATION)
+        return self.base_find_element(*REGISTRATION)
+
+    @property
+    def user(self):
+        return self.base_find_element(*USER)
 
 
 class SignInPage(BasePage):
     def __init__(self, driver):
         BasePage.__init__(self, driver)
 
-    def find_element(self, *locator):
-        self.driver.find_element(*locator)
-
     @property
     def email(self):
-        return self.find_element(EMAIL)
+        return self.base_find_element(*EMAIL)
 
     @property
     def password(self):
-        return self.find_element(PASS)
+        return self.base_find_element(*PASS)
 
     @property
     def submit_btn(self):
-        return self.find_element(SUBMIT_BTN)
+        return self.base_find_element(*SUBMIT_BTN)
 
 
 class RegistrationPage(BasePage):
