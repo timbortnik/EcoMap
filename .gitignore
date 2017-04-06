@@ -64,3 +64,6 @@ ecomap/www/uploads/
 # Vagrant files
 .vagrant/
 .idea/
+
+# idea
+.idea/
