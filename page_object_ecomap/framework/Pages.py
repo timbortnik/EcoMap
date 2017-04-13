@@ -2,6 +2,8 @@ from selenium.common.exceptions import TimeoutException
 from framework.BasePage import BasePage
 from framework.Locators import *
 from math import fabs
+
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 import requests
 import json
@@ -11,10 +13,6 @@ class HomePage(BasePage):
     def get_login_page(self):
         self.click(*HomePageLocator.LOG_IN)
         return LoginPage(self.driver)
-
-    def get_user_profile_page(self):
-        self.click(*HomePageLocator.USER_PROFILE)
-        return UserProfilePage(self.driver)
 
     def get_expected_url(self):
         return self.base_url
@@ -44,6 +42,10 @@ class HomeUserPage(BasePage):
     def is_add_problem_tab_present(self):
         return self.is_element_present(*NavigationLocator.ADD_PROBLEM)
 
+    def get_user_profile_page(self):
+        self.click(*HomeUserPageLocator.USER_PROFILE_LINK)
+        return UserProfilePage(self.driver)
+
 
 class LoginPage(BasePage):
     def login(self, login_name, password):
@@ -55,6 +57,14 @@ class LoginPage(BasePage):
     def get_expected_url(self):
         return self.base_url + LoginPageLocator.URL
 
+    def is_email_field_present(self):
+        return self.is_element_present(*LoginPageLocator.EMAIL)
+
+    def is_password_field_present(self):
+        return self.is_element_present(*LoginPageLocator.PASSWORD)
+
+    def is_submit_button_present(self):
+        return self.is_element_present(*LoginPageLocator.SUBMIT)
 
 class AddProblemPage(BasePage):
 
@@ -154,3 +164,59 @@ class UserProfilePage(BasePage):
 
     def get_expected_url(self):
         return self.base_url + UserProfileLocator.URL
+
+    def get_issues_page(self):
+        self.click(*UserProfileNavigationLocator.ISSUES_TAB)
+        return UserProfileIssuesPage(self.driver)
+
+
+class UserProfileIssuesPage(BasePage):
+    '''user profile tab where the list of created issues is located'''
+    def get_expected_url(self):
+        return self.base_url + UserProfileIssuesLocator.URL
+
+    def edit_first_issue(self):
+        self.click(*UserProfileIssuesLocator.FIRST_ISSUE_EDIT_LINK)
+        return IssuePage(self.driver)
+
+
+class IssuePage(BasePage):
+    '''Page where the detailed information about issue is shown.
+       There is a map on it and section where you can edit an issue
+    '''
+    def check_importance_field_is_present(self):
+        if self.is_element_present(IssueLocator.IMPORTANCE):
+            return True
+        return False
+
+    def check_status_field_is_present(self):
+        if self.is_element_present(IssueLocator.STATUS):
+            return True
+        return False
+
+    def check_change_button_is_present(self):
+        if self.is_element_present(IssueLocator.CHANGE_BTN):
+            return True
+        return False
+
+    def change_importance(self, value):
+        select = Select(self.find_element(*IssueLocator.IMPORTANCE))
+        select.select_by_index(value - 1)
+
+    def change_status(self, is_unsolved):
+        select = Select(self.find_element(*IssueLocator.STATUS))
+        if is_unsolved:
+            select.select_by_visible_text("Не вирішено")
+        else:
+            select.select_by_visible_text("Вирішено")
+
+    def submit_change(self):
+        self.click(*IssueLocator.CHANGE_BTN)
+
+    def is_success_popup_present(self):
+        _d = self.driver
+        try:
+            WebDriverWait(_d, 5).until(lambda _d: _d.find_element(*IssueLocator.POP_UP_WINDOW_SUCCESSFUL_CHANGE))
+        except Exception:
+            return False
+        return True
