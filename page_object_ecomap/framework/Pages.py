@@ -5,7 +5,7 @@ from math import fabs
 from selenium.webdriver.support.wait import WebDriverWait
 import requests
 import json
-from selenium.webdriver import ActionChains
+import os
 
 
 class HomePage(BasePage):
@@ -182,11 +182,8 @@ class AddProblemPage(BasePage):
         return self.is_element_present(*AddProblemPageLocator.PHOTO_DESCRIPTION)
 
     def add_photo_and_description(self, description):
-        actions = ActionChains(self.driver)
-        actions.move_to_element(self.driver.find_element(*AddProblemPageLocator.ADD_PHOTO))
-        actions.click()
-        actions.send_keys("/home/anastasiia/EcoMap/screen_cropped.png")
-        actions.perform()
+        elem = self.driver.find_element(*AddProblemPageLocator.ADD_PHOTO).click()
+        elem.send_keys(os.getcwd() + "test_image1.png")
         self.driver.find_element(*AddProblemPageLocator.PHOTO_DESCRIPTION).clear()
         self.type(description, *AddProblemPageLocator.PHOTO_DESCRIPTION)
 

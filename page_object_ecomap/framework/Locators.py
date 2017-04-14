@@ -70,6 +70,8 @@ class AddProblemPageLocator:
     DUPLICATE_PROBLEM = (By.XPATH, '//*[@id="toast-container"]/div/div[2]/div')
     CONFIRMATION_MESSAGE = (By.XPATH, '//*[@id="toast-container"]/div/div[2]/div')
     CONFIRMATION_MESSAGE2 = (By.XPATH, '//*[@id="toast-container"]/div[1]/div[2]/div')
+    FORM = (By.XPATH, '//form[@name="uploadProblemPhoto"]')
+    INPUT = (By.XPATH, '//input[@id="textAngular-editableFix-010203040506070809"]')
 
 
 class Location_Locator(object):
