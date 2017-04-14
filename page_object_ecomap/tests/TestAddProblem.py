@@ -21,12 +21,12 @@ class AddProblemTestAdmin(TestBase):
                          self.add_problem.confirmation_message())
 
     def test_add_problem_without_photo_using_search_admin(self):
-         self.go_to_add_problem_page()
-         self.locate_problem_with_search_button()
-         self.fill_necessary_fields()
-         self.publish_problem()
-         self.assertEqual('Проблема упішно додана та проходить модерацію. Очікуйте повідомлення.',
-                         self.add_problem.confirmation_message())
+        self.go_to_add_problem_page()
+        self.locate_problem_with_search_button()
+        self.fill_necessary_fields()
+        self.publish_problem()
+        self.assertEqual('Проблема упішно додана та проходить модерацію. Очікуйте повідомлення.',
+                          self.add_problem.confirmation_message())
 
     # def test_add_problem_with_photo_using_find_me(self):
     #     self.go_to_add_problem_page()
