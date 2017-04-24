@@ -5,7 +5,7 @@ import os
 BASE_URL = os.environ.get('ECOMAP_BASE_URL')
 
 class CommonLocator:
-    SUCCESS_POPUP = (By.XPATH, '//*[@id="toast-container"]/div')
+    SUCCESS_POPUP = (By.XPATH, '//*[@id="toast-container"][1]')
 
 class LogoLocator:
     LOGO = (By.XPATH, "//img[contains(@src, 'logo.png')]")
@@ -134,8 +134,6 @@ class Statistics:
     EYE = (By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[1]/div[1]/div[3]/div/span')
 
 
-
-
 class AdministerTabLocator:
     ISSUE_TYPE_TAB = (By.XPATH, '//a[text()[contains(.,"Тип проблеми")]]')
     FIRST_ISSUE_CHANGE_STATUS_BUTTON = (By.XPATH, "/html/body/div/div[4]/div[1]/div/div/div/div[3]/div/div[1]/table/tbody/tr[1]/td[4]/button[2]")
@@ -157,21 +155,23 @@ class CommentsUserProfileLocator:
 
 
 class EditProblemLocator:
+    COMMENT_BLOCKS = (By.XPATH, "//div[@ng-repeat='comment in comments']")
+    ANSWER_BLOCKS = (By.XPATH, "//div[@ng-repeat='subcomment in subcomments']")
     COMMENT_TAB = (By.XPATH, "//a[text()='Коментарі']")
     COMMENT_TEXTAREA = (By.XPATH, "//textarea[@placeholder='Ваш коментар']")
     ADD_COMMENT_BTN = (By.XPATH, "//input[@value='Додати коментар']")
     ANONYMOUSLY_CHECKBOX = (By.XPATH, "//input[@ng-model='comment.changeUser']")
-    COMMENT_BLOCK = "//div[@ng-repeat='comment in comments'][last()]"
-    COMMENT_NICKNAME = (By.XPATH, COMMENT_BLOCK + "//*[contains(@class,'comment-nickname')]")
-    COMMENT_DATETIME = (By.XPATH, COMMENT_BLOCK + "//span[@ng-hide='comment.updated_date']")
-    COMMENT_TEXT = (By.XPATH, COMMENT_BLOCK + "//div[@class='panel-body comment-block ng-binding']")
-    COMMENT_ANSWER_LINK = (By.XPATH, COMMENT_BLOCK + "//div[1]/a[contains(@ng-click,'getSubComments')]")
-    COMMENT_EDIT_LINK =(By.XPATH, COMMENT_BLOCK + "//span[@class='fa fa-pencil comment-update']")
-    COMMENT_EDIT_LINK_HIDDEN = (By.XPATH, COMMENT_BLOCK + "//span[@class='fa fa-pencil comment-update ng-hide']")
-    COMMENT_LINK = (By.XPATH, COMMENT_BLOCK + "//span[@ng-click='makeLink(comment.id)']")
+    COMMENT_LAST = "//div[@ng-repeat='comment in comments'][last()]"
+    COMMENT_NICKNAME = (By.XPATH, COMMENT_LAST + "//*[contains(@class,'comment-nickname')]")
+    COMMENT_DATETIME = (By.XPATH, COMMENT_LAST + "//span[@ng-hide='comment.updated_date']")
+    COMMENT_TEXT = (By.XPATH, COMMENT_LAST + "//div[@class='panel-body comment-block ng-binding']")
+    COMMENT_ANSWER_LINK = (By.XPATH, COMMENT_LAST + "//div[1]/a[contains(@ng-click,'getSubComments')]")
+    COMMENT_EDIT_LINK =(By.XPATH, COMMENT_LAST + "//span[@class='fa fa-pencil comment-update']")
+    COMMENT_EDIT_LINK_HIDDEN = (By.XPATH, COMMENT_LAST + "//span[@class='fa fa-pencil comment-update ng-hide']")
+    COMMENT_LINK = (By.XPATH, COMMENT_LAST + "//span[@ng-click='makeLink(comment.id)']")
 
     ANSWER_TEXTAREA = (By.XPATH, "//textarea[@placeholder='Ваша відповідь']")
     ADD_ANSWER_BTN = (By.XPATH, "//input[@value='Додати відповідь']")
-    ANSWER_BLOCK = "//div[@ng-repeat='subcomment in subcomments'][last()]"
-    ANSWER_NICKNAME = (By.XPATH, ANSWER_BLOCK + "//strong[@class='pull-left comment-nickname ng-binding']")
-    ANSWER_TEXT = (By.XPATH, ANSWER_BLOCK + "//div[@ng-bind='subcomment.content']")
+    ANSWER_LAST = "//div[@ng-repeat='subcomment in subcomments'][last()]"
+    ANSWER_NICKNAME = (By.XPATH, ANSWER_LAST + "//strong[@class='pull-left comment-nickname ng-binding']")
+    ANSWER_TEXT = (By.XPATH, ANSWER_LAST + "//div[@ng-bind='subcomment.content']")

@@ -9,6 +9,7 @@ class TestAddCommentsAsAdmin(TestBase):
     def setUpClass(cls):
         super(TestAddCommentsAsAdmin, cls).setUpClass()
         # login as admin
+        cls.driver.implicitly_wait(10)
         cls.home_user_page = HomePage(cls.driver).get_login_page().login(
             TEST_DATA.get("email"), TEST_DATA.get("password"))
         cls.assertTrue(cls.home_user_page.is_logout_btn_present(), 'Logout button is absent')
@@ -25,19 +26,22 @@ class TestAddCommentsAsAdmin(TestBase):
         self.edit_problem_page.click_on_comment_tab()
 
     def test_add_comment_non_anonymous(self):
-        self.is_add_comment_elements_present()
+        number_of_comments_before_adding = self.edit_problem_page.get_number_of_comments()
+        self.assert_add_comment_elements_present()
         self.edit_problem_page.add_comment(self.comment_text)
         self.assertTrue(self.edit_problem_page.is_success_popup_present(), "Success popup is not present")
         self.assertEqual(self.edit_problem_page.get_comment_nickname(), TEST_DATA.get("admin_nickname"))
+        number_of_comments_after_adding = self.edit_problem_page.get_number_of_comments()
+        self.assertEqual(number_of_comments_before_adding + 1, number_of_comments_after_adding)
         self.assertAlmostEqual(self.edit_problem_page.get_comment_datetime(),
                                self.edit_problem_page.get_current_datetime(),
                                delta=self.edit_problem_page.get_timedelta())
         self.assertEqual(self.edit_problem_page.get_comment_text(), self.comment_text)
-        self.is_created_comment_elements_present(anonymous=False)
+        self.assert_created_comment_elements_present(anonymous=False)
 
     def test_add_comment_as_anonymous(self):
         nickname = TEST_DATA.get("anonymous_nickname")
-        self.is_add_comment_elements_present()
+        self.assert_add_comment_elements_present()
         self.edit_problem_page.add_comment_anonymous(self.comment_text)
         self.assertTrue(self.edit_problem_page.is_success_popup_present(), "Success popup is not present")
         self.assertEqual(self.edit_problem_page.get_comment_nickname(), nickname)
@@ -45,15 +49,16 @@ class TestAddCommentsAsAdmin(TestBase):
                                self.edit_problem_page.get_current_datetime(),
                                delta=self.edit_problem_page.get_timedelta())
         self.assertEqual(self.edit_problem_page.get_comment_text(), self.comment_text)
-        self.is_created_comment_elements_present(anonymous=True)
+        self.assert_created_comment_elements_present(anonymous=True)
 
     def test_add_answer_non_anonymous(self):
+        number_of_answers_before_adding = self.edit_problem_page.get_number_of_answers()
         self.edit_problem_page.add_comment(self.comment_text)
         self.assertTrue(self.edit_problem_page.is_success_popup_present(), "Success popup is not present")
-        self.edit_problem_page.click_on_answer_link()
-        self.edit_problem_page.type_answer(self.answer_text)
-        self.edit_problem_page.click_on_add_answer_btn()
+        self.edit_problem_page.add_answer(self.answer_text)
         self.assertTrue(self.edit_problem_page.is_success_popup_present(), "Success popup is not present")
+        number_of_answers_after_adding = self.edit_problem_page.get_number_of_answers()
+        self.assertEqual(number_of_answers_before_adding + 1, number_of_answers_after_adding)
         self.assertEqual(self.edit_problem_page.get_answer_text(), self.answer_text)
         self.assertEqual(self.edit_problem_page.get_answer_nickname(), TEST_DATA.get('admin_nickname'))
 
@@ -65,12 +70,12 @@ class TestAddCommentsAsAdmin(TestBase):
         comments_profile_page.click_on_delete_btn()
         self.assertTrue(comments_profile_page.is_success_popup_present())
 
-    def is_add_comment_elements_present(self):
+    def assert_add_comment_elements_present(self):
         self.assertTrue(self.edit_problem_page.is_comment_textarea_visible())
         self.assertTrue(self.edit_problem_page.is_add_comment_btn_visible())
         self.assertTrue(self.edit_problem_page.is_anonymously_checkbox_visible())
 
-    def is_created_comment_elements_present(self, anonymous=False):
+    def assert_created_comment_elements_present(self, anonymous=False):
         self.assertTrue(self.edit_problem_page.is_comment_answer_link_visible(),
                         "Answer link is not present in the comment")
         self.assertTrue(self.edit_problem_page.is_comment_link_visible(), "Link on comment is not present")

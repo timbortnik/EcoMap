@@ -342,6 +342,7 @@ class ProblemsUserProfilePage(BasePage):
         return ProblemsUserProfileLocator.URL
 
     def get_edit_problem_page(self):
+        self.wait_until_invisibility_of_element_located(CommonLocator.SUCCESS_POPUP, timeout=10)
         if self.is_element_present(*ProblemsUserProfileLocator.EDIT_LINK_BY_PROMLEM_TITLE):
             self.click(*ProblemsUserProfileLocator.EDIT_LINK_BY_PROMLEM_TITLE)
             return EditProblemPage(self.driver)
@@ -432,18 +433,29 @@ class EditProblemPage(HomeUserPage):
     def get_answer_nickname(self):
         return self.get_text(*EditProblemLocator.ANSWER_NICKNAME)
 
+    def get_number_of_comments(self):
+        return self.get_number_of_elements(*EditProblemLocator.COMMENT_BLOCKS)
+
+    def get_number_of_answers(self):
+        return self.get_number_of_elements(*EditProblemLocator.ANSWER_BLOCKS)
+
+    def add_answer(self, text):
+        self.click_on_answer_link()
+        self.type_answer(text)
+        self.click_on_add_answer_btn()
+
+
 
 class CommentsUserProfilePage(BasePage):
     def get_expected_url(self):
         return CommentsUserProfileLocator.URL
 
     def click_on_delete_btn(self):
+        self.wait_until_invisibility_of_element_located(CommonLocator.SUCCESS_POPUP, timeout=10)
         self.click(*CommentsUserProfileLocator.DELETE_LINK_BY_COMMENT_TITLE)
 
     def is_success_popup_present(self):
         return self.is_popup_present(*CommonLocator.SUCCESS_POPUP)
-
-
 
     def get_admin_tab(self):
         self.click(*UserProfileNavigationLocator.ADMIN_TAB)

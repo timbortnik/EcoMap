@@ -110,6 +110,10 @@ class BasePage:
             return False
         return True
 
+    def get_number_of_elements(self, *locator):
+        return len(self.driver.find_elements(*locator))
+
+
 
 
 
